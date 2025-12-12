@@ -1,0 +1,156 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { prisma } from '@/lib/prisma'
+import { slugify } from '@/lib/utils'
+import { writeFile, mkdir } from 'fs/promises'
+import { join } from 'path'
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const session = await getServerSession(authOptions)
+  
+  if (!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
+  }
+
+  try {
+    await prisma.course.delete({
+      where: { id: params.id },
+    })
+
+    return NextResponse.json({ message: 'Course deleted' })
+  } catch (error) {
+    console.error('Error deleting course:', error)
+    return NextResponse.json(
+      { message: 'Error deleting course' },
+      { status: 500 }
+    )
+  }
+}
+
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const session = await getServerSession(authOptions)
+  
+  if (!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
+  }
+
+  try {
+    const formData = await request.formData()
+    const title = formData.get('title') as string
+    const description = formData.get('description') as string || null
+    const link = formData.get('link') as string
+    const imageFile = formData.get('image') as File | null
+    const priceStr = formData.get('price') as string
+    const price = priceStr && priceStr !== '' ? parseFloat(priceStr) : null
+    const pricePerLessonStr = formData.get('pricePerLesson') as string
+    const pricePerLesson = pricePerLessonStr && pricePerLessonStr !== '' ? parseFloat(pricePerLessonStr) : null
+    const pricePerMonthStr = formData.get('pricePerMonth') as string
+    const pricePerMonth = pricePerMonthStr && pricePerMonthStr !== '' ? parseFloat(pricePerMonthStr) : null
+    const priceOneTimeStr = formData.get('priceOneTime') as string
+    const priceOneTime = priceOneTimeStr && priceOneTimeStr !== '' ? parseFloat(priceOneTimeStr) : null
+    const priceType = formData.get('priceType') as string || null
+    const duration = formData.get('duration') as string || null
+    const contacts = formData.get('contacts') as string || null
+    const pros = formData.get('pros') as string || null
+    const cons = formData.get('cons') as string || null
+    const authorId = formData.get('authorId') as string
+    const categoryId = formData.get('categoryId') as string || null
+    const status = formData.get('status') as string
+    const tagIdsStr = formData.get('tagIds') as string
+    const tagIds = tagIdsStr ? JSON.parse(tagIdsStr) : []
+
+    // Generate slug from title
+    const baseSlug = slugify(title)
+    let slug = baseSlug
+    let counter = 1
+
+    const existingCourse = await prisma.course.findUnique({ where: { id: params.id } })
+    const currentSlug = existingCourse?.slug
+
+    // Only regenerate slug if title changed
+    if (title !== existingCourse?.title) {
+      while (await prisma.course.findFirst({
+        where: {
+          slug,
+          id: { not: params.id }
+        }
+      })) {
+        slug = `${baseSlug}-${counter}`
+        counter++
+      }
+    } else {
+      slug = currentSlug || baseSlug
+    }
+
+    // Handle image upload
+    let imagePath = existingCourse?.image || null
+    if (imageFile && imageFile.size > 0) {
+      try {
+        const bytes = await imageFile.arrayBuffer()
+        const buffer = Buffer.from(bytes)
+        
+        const filename = `${Date.now()}-${imageFile.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`
+        const uploadDir = join(process.cwd(), 'public', 'uploads', 'courses')
+        
+        await mkdir(uploadDir, { recursive: true })
+        const filepath = join(uploadDir, filename)
+        await writeFile(filepath, buffer)
+        imagePath = `/uploads/courses/${filename}`
+      } catch (error) {
+        console.error('Error saving image:', error)
+        // Continue with existing image if upload fails
+      }
+    }
+
+    // Delete existing tags and create new ones
+    await prisma.courseTag.deleteMany({
+      where: { courseId: params.id },
+    })
+
+    const course = await prisma.course.update({
+      where: { id: params.id },
+      data: {
+        title,
+        slug,
+        description: description || null,
+        link,
+        image: imagePath,
+        price: price || null,
+        pricePerLesson: pricePerLesson || null,
+        pricePerMonth: pricePerMonth || null,
+        priceOneTime: priceOneTime || null,
+        priceType: priceType || null,
+        duration: duration || null,
+        contacts: contacts || null,
+        pros: pros || null,
+        cons: cons || null,
+        authorId,
+        categoryId: categoryId || null,
+        status,
+        publishedAt: status === 'APPROVED' && existingCourse?.status !== 'APPROVED'
+          ? new Date()
+          : existingCourse?.publishedAt,
+        tags: {
+          create: (tagIds || []).map((tagId: string) => ({
+            tag: { connect: { id: tagId } },
+          })),
+        },
+      },
+    })
+
+    return NextResponse.json({ course })
+  } catch (error) {
+    console.error('Error updating course:', error)
+    return NextResponse.json(
+      { message: 'Error updating course' },
+      { status: 500 }
+    )
+  }
+}

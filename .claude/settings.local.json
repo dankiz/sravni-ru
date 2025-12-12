@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where:*)",
+      "Bash(pg_ctl:*)",
+      "Bash(psql:*)",
+      "Bash(node scripts/create-admin-direct.js:*)",
+      "Bash(node scripts/check-courses.js:*)",
+      "Bash(curl http://localhost:3000)",
+      "Bash(curl http://localhost:3003)",
+      "Bash(curl:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(timeout 5 curl:*)",
+      "Bash(node scripts/add-test-course.js:*)",
+      "Bash(node scripts/debug-course.js:*)",
+      "Bash(npx prisma db push:*)",
+      "Bash(if exist \"c:\\Users\\Daniil\\Desktop\\Скрипты\\Skysmart\\sravni.ru\\app\\school\" rmdir /s /q \"c:\\Users\\Daniil\\Desktop\\Скрипты\\Skysmart\\sravni.ru\\app\\school\")",
+      "Bash(move author school)",
+      "Bash(node -e:*)",
+      "Bash(node check-authors.js:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx prisma generate:*)",
+      "Bash(node scripts/add-school-review.js:*)",
+      "Bash(node scripts/update-skysmart-bio.js:*)",
+      "Bash(if exist \"c:\\Users\\Daniil\\Desktop\\Скрипты\\Skysmart\\sravni.ru\\app\\courses\\[slug]\" move \"c:\\Users\\Daniil\\Desktop\\Скрипты\\Skysmart\\sravni.ru\\app\\courses\\[slug]\" \"c:\\Users\\Daniil\\Desktop\\Скрипты\\Skysmart\\sravni.ru\\app\\courses\\[slug].disabled\")",
+      "Bash(node scripts/load-courses-now.js:*)",
+      "Bash(node scripts/reload-courses-with-categories.js:*)",
+      "Bash(taskkill:*)",
+      "Bash(tasklist:*)",
+      "Bash(dir:*)",
+      "Bash(node server.js:*)",
+      "Bash(npm run dev:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

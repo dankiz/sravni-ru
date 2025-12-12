@@ -1,0 +1,179 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Author {
+  id          String         @id @default(cuid())
+  name        String
+  slug        String         @unique
+  bio         String?        @db.Text
+  logo        String?
+  contacts    String?        @db.Text
+  website     String?
+  email       String?
+  legalInfo   String?        @db.Text
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  courses     Course[]
+  reviews     SchoolReview[]
+
+  @@index([slug])
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?  @db.Text
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  courses     Course[]
+
+  @@index([slug])
+  @@index([order])
+}
+
+model Course {
+  id               String       @id @default(cuid())
+  title            String
+  slug             String       @unique
+  description      String?      @db.Text
+  link             String
+  image            String?
+  price            Float?       @default(0)
+  pricePerLesson   Float?
+  pricePerMonth    Float?
+  priceOneTime     Float?
+  priceType        PriceType?
+  duration         String?
+  contacts         String?      @db.Text
+  pros             String?      @db.Text
+  cons             String?      @db.Text
+  authorId         String
+  author           Author       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  categoryId       String?
+  category         Category?    @relation(fields: [categoryId], references: [id])
+  status           CourseStatus @default(PENDING)
+  averageRating    Float?       @default(0)
+  reviewCount      Int          @default(0)
+  submittedByName  String?
+  submittedByEmail String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  publishedAt      DateTime?
+  reviews          Review[]
+  tags             CourseTag[]
+
+  @@index([slug])
+  @@index([status])
+  @@index([authorId])
+  @@index([categoryId])
+}
+
+enum PriceType {
+  PER_LESSON
+  PER_MONTH
+  ONE_TIME
+}
+
+enum CourseStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Review {
+  id          String       @id @default(cuid())
+  courseId    String
+  course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  authorName  String
+  authorEmail String?
+  rating      Int
+  title       String?
+  text        String?      @db.Text
+  pros        String?      @db.Text
+  cons        String?      @db.Text
+  comment     String?      @db.Text
+  status      ReviewStatus @default(PENDING)
+  createdAt   DateTime     @default(now())
+  submittedAt DateTime     @default(now())
+  publishedAt DateTime?
+
+  @@index([courseId])
+  @@index([status])
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model SchoolReview {
+  id          String       @id @default(cuid())
+  authorId    String
+  author      Author       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorName  String
+  authorEmail String?
+  rating      Int
+  title       String?
+  text        String?      @db.Text
+  pros        String?      @db.Text
+  cons        String?      @db.Text
+  comment     String?      @db.Text
+  status      ReviewStatus @default(PENDING)
+  createdAt   DateTime     @default(now())
+  submittedAt DateTime     @default(now())
+  publishedAt DateTime?
+
+  @@index([authorId])
+  @@index([status])
+}
+
+model Tag {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  slug        String      @unique
+  description String?     @db.Text
+  color       String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  courses     CourseTag[]
+
+  @@index([slug])
+}
+
+model CourseTag {
+  id        String   @id @default(cuid())
+  courseId  String
+  tagId     String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  tag       Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([courseId, tagId])
+  @@index([courseId])
+  @@index([tagId])
+}
+
+
+
+
