@@ -31,7 +31,15 @@ export default function AuthorEditForm({ author }: AuthorEditFormProps) {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm({
+  } = useForm<{
+    name: string
+    bio: string
+    contacts: string
+    website: string
+    email: string
+    legalInfo: string
+    logoFile?: FileList
+  }>({
     defaultValues: {
       name: author?.name || '',
       bio: author?.bio || '',
