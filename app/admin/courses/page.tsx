@@ -28,7 +28,7 @@ export default async function CoursesPage() {
             href="/admin/courses/pending"
             className="text-primary-400 hover:text-primary-300 font-semibold transition"
           >
-            На модерации ({courses.filter(c => c.status === 'PENDING').length})
+            На модерации ({courses.filter((c: any) => c.status === 'PENDING').length})
           </Link>
           <Link
             href="/admin/courses/new"

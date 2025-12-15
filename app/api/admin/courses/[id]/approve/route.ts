@@ -24,9 +24,9 @@ export async function POST(
     }
 
     // Calculate average rating from approved reviews
-    const approvedReviews = course.reviews.filter(r => r.status === 'APPROVED')
+    const approvedReviews = course.reviews.filter((r: any) => r.status === 'APPROVED')
     const averageRating = approvedReviews.length > 0
-      ? approvedReviews.reduce((sum, r) => sum + r.rating, 0) / approvedReviews.length
+      ? approvedReviews.reduce((sum: number, r: any) => sum + r.rating, 0) / approvedReviews.length
       : 0
 
     // Update course status and rating

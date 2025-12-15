@@ -38,14 +38,14 @@ async function getAuthor(slug: string) {
 
     // Calculate average rating from all courses
     const avgRating = author.courses.length > 0
-      ? author.courses.reduce((sum, course) => sum + (course.averageRating || 0), 0) / author.courses.length
+      ? author.courses.reduce((sum: number, course: any) => sum + (course.averageRating || 0), 0) / author.courses.length
       : 0
 
     // Calculate total reviews
-    const totalReviews = author.courses.reduce((sum, course) => sum + (course.reviewCount || 0), 0)
+    const totalReviews = author.courses.reduce((sum: number, course: any) => sum + (course.reviewCount || 0), 0)
 
     // Get reviews separately for courses that have them
-    const courseIds = author.courses.map(c => c.id)
+    const courseIds = author.courses.map((c: any) => c.id)
     const allReviews = courseIds.length > 0
       ? await prisma.review.findMany({
           where: {
@@ -68,7 +68,7 @@ async function getAuthor(slug: string) {
 
     // Calculate school rating
     const schoolAvgRating = schoolReviews.length > 0
-      ? schoolReviews.reduce((sum, review) => sum + review.rating, 0) / schoolReviews.length
+      ? schoolReviews.reduce((sum: number, review: any) => sum + review.rating, 0) / schoolReviews.length
       : 0
 
     console.log('Course reviews count:', allReviews.length)

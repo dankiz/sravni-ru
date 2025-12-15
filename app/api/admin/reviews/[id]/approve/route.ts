@@ -35,7 +35,7 @@ export async function POST(
     })
 
     const averageRating = allReviews.length > 0
-      ? allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length
+      ? allReviews.reduce((sum: number, r: any) => sum + r.rating, 0) / allReviews.length
       : 0
 
     await prisma.course.update({

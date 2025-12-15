@@ -36,10 +36,10 @@ async function getCategories() {
     }
 
     // Фильтруем только категории с курсами
-    const filtered = categoriesWithCounts.filter(category => category.approvedCount > 0)
+    const filtered = categoriesWithCounts.filter((category: any) => category.approvedCount > 0)
 
     // Сортируем по order, затем по исходному индексу
-    filtered.sort((a, b) => {
+    filtered.sort((a: any, b: any) => {
       if (a.order !== b.order) {
         return a.order - b.order
       }

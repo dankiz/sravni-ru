@@ -57,7 +57,7 @@ export default function RatingManager({ courses }: { courses: Course[] }) {
 
   const calculateActualRating = (reviews: { rating: number }[]) => {
     if (reviews.length === 0) return 0
-    return reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+    return reviews.reduce((sum: number, r: any) => sum + r.rating, 0) / reviews.length
   }
 
   return (

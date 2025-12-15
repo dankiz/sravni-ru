@@ -114,7 +114,7 @@ export default function CourseEditForm({
   const toggleTag = (tagId: string) => {
     setSelectedTags(prev =>
       prev.includes(tagId)
-        ? prev.filter(id => id !== tagId)
+        ? prev.filter((id: any) => id !== tagId)
         : [...prev, tagId]
     )
   }

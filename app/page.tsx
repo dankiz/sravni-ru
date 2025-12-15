@@ -61,10 +61,10 @@ async function getCategories() {
     }
 
     // Фильтруем только категории с курсами
-    const filtered = categoriesWithCounts.filter(category => category.approvedCount > 0)
+    const filtered = categoriesWithCounts.filter((category: any) => category.approvedCount > 0)
 
     // Сортируем: ЕГЭ и ОГЭ первые (1 и 2), остальные по количеству курсов (по убыванию)
-    filtered.sort((a, b) => {
+    filtered.sort((a: any, b: any) => {
       // Проверяем, является ли категория ЕГЭ или ОГЭ
       const isA_EGE = a.name.toLowerCase().includes('егэ') || a.slug.toLowerCase().includes('ege')
       const isA_OGE = a.name.toLowerCase().includes('огэ') || a.slug.toLowerCase().includes('oge')
