@@ -44,7 +44,7 @@ export default function CategoryOrderManager({ initialCategories }: CategoryOrde
     setIsSaving(true)
 
     try {
-      const categoryIds = categories.map(c => c.id)
+      const categoryIds = categories.map((c: any) => c.id)
 
       const response = await fetch('/api/admin/categories/reorder', {
         method: 'PUT',

@@ -53,7 +53,7 @@ async function getTag(slug: string) {
     if (!tag) return null
 
     // Map courses from CourseTag relation
-    const approvedCourses = tag.courses.map(ct => ct.course)
+    const approvedCourses = tag.courses.map((ct: any) => ct.course)
 
     return {
       ...tag,

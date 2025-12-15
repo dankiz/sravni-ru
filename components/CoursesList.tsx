@@ -94,7 +94,7 @@ export default function CoursesList({ initialCourses, initialTotal, searchParams
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
+      (entries: IntersectionObserverEntry[]) => {
         if (entries[0].isIntersecting && hasMore && !loading) {
           loadMore()
         }

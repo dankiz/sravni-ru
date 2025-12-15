@@ -21,6 +21,6 @@ export async function GET(
     decodedSlug,
     includesPercent: decodedSlug.includes('%'),
     length: decodedSlug.length,
-    chars: decodedSlug.split('').map(c => `${c} (${c.charCodeAt(0)})`),
+    chars: decodedSlug.split('').map((c: string) => `${c} (${c.charCodeAt(0)})`),
   })
 }

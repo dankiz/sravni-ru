@@ -61,7 +61,7 @@ export default function CourseEditForm({
 }) {
   const [isLoading, setIsLoading] = useState(false)
   const [selectedTags, setSelectedTags] = useState<string[]>(
-    course.tags?.map(t => t.tag.id) || []
+    course.tags?.map((t: any) => t.tag.id) || []
   )
   const router = useRouter()
 
@@ -108,7 +108,7 @@ export default function CourseEditForm({
     setValue('authorId', course.authorId)
     setValue('categoryId', course.categoryId || '')
     setValue('status', course.status)
-    setSelectedTags(course.tags?.map(t => t.tag.id) || [])
+    setSelectedTags(course.tags?.map((t: any) => t.tag.id) || [])
   }, [course, setValue])
 
   const toggleTag = (tagId: string) => {
