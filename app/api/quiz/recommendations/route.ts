@@ -282,7 +282,7 @@ export async function POST(request: NextRequest) {
       const relaxedCourses = await prisma.course.findMany({
         where: {
           ...relaxedWhere,
-          id: { notIn: courses.map((c) => c.id) },
+          id: { notIn: courses.map((c: any) => c.id) },
         },
         include: {
           author: {
@@ -380,7 +380,7 @@ export async function POST(request: NextRequest) {
       const categoryOnlyCourses = await prisma.course.findMany({
         where: {
           ...categoryOnlyWhere,
-          id: { notIn: courses.map((c) => c.id) },
+          id: { notIn: courses.map((c: any) => c.id) },
         },
         include: {
           author: {
