@@ -67,7 +67,7 @@ export default async function TagsPage() {
                   </td>
                 </tr>
               ) : (
-                tags.map((tag) => (
+                tags.map((tag: any) => (
                   <tr key={tag.id} className="hover:bg-gray-700/50 transition">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-100">

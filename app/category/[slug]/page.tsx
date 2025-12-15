@@ -109,7 +109,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
         {/* Courses Grid */}
         {category.courses.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {category.courses.map((course) => (
+            {category.courses.map((course: any) => (
               <CourseCard key={course.id} course={course} />
             ))}
           </div>

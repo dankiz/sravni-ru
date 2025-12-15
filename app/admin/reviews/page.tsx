@@ -26,7 +26,7 @@ export default async function ReviewsPage() {
 
       {reviews.length > 0 ? (
         <div className="space-y-6">
-          {reviews.map((review) => (
+          {reviews.map((review: any) => (
             <div key={review.id} className="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700">
               <div className="flex items-start justify-between mb-4">
                 <div>

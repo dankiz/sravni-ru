@@ -37,7 +37,7 @@ export default async function CategoriesPage() {
       <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-8 border border-gray-700">
         <h2 className="text-xl font-bold text-white mb-4">Управление порядком</h2>
         <CategoryOrderManager
-          initialCategories={categories.map(c => ({
+          initialCategories={categories.map((c: any) => ({
             id: c.id,
             name: c.name,
             slug: c.slug,
@@ -66,7 +66,7 @@ export default async function CategoriesPage() {
               </tr>
             </thead>
             <tbody className="bg-gray-800 divide-y divide-gray-700">
-              {categories.map((category) => (
+              {categories.map((category: any) => (
                 <tr key={category.id} className="hover:bg-gray-700/50 transition">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-100">

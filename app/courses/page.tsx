@@ -191,7 +191,7 @@ export default async function CoursesPage({
                     className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                   >
                     <option value="">Все категории</option>
-                    {categories.map((cat) => (
+                    {categories.map((cat: any) => (
                       <option key={cat.id} value={cat.slug}>
                         {cat.name}
                       </option>

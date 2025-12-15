@@ -133,7 +133,7 @@ export default function CoursesList({ initialCourses, initialTotal, searchParams
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {courses.map((course) => (
+        {courses.map((course: any) => (
           <CourseCard key={course.id} course={course} />
         ))}
       </div>
