@@ -55,7 +55,10 @@ export async function PUT(
     const pricePerMonth = pricePerMonthStr && pricePerMonthStr !== '' ? parseFloat(pricePerMonthStr) : null
     const priceOneTimeStr = formData.get('priceOneTime') as string
     const priceOneTime = priceOneTimeStr && priceOneTimeStr !== '' ? parseFloat(priceOneTimeStr) : null
-    const priceType = formData.get('priceType') as string || null
+    const priceTypeStr = formData.get('priceType') as string || null
+    const priceType = priceTypeStr && ['PER_LESSON', 'PER_MONTH', 'ONE_TIME'].includes(priceTypeStr) 
+      ? priceTypeStr as 'PER_LESSON' | 'PER_MONTH' | 'ONE_TIME'
+      : null
     const duration = formData.get('duration') as string || null
     const contacts = formData.get('contacts') as string || null
     const pros = formData.get('pros') as string || null
