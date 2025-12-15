@@ -4,18 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-
-interface Author {
-  id: string
-  name: string
-  slug: string
-  bio: string | null
-  logo: string | null
-  contacts: string | null
-  website: string | null
-  email: string | null
-  legalInfo: string | null
-}
+import { Author } from '@prisma/client'
 
 interface AuthorEditFormProps {
   author?: Author | null

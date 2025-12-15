@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma'
 import { slugify } from '@/lib/utils'
 import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
+import { CourseStatus } from '@prisma/client'
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions)
@@ -37,7 +38,8 @@ export async function POST(request: NextRequest) {
     const cons = formData.get('cons') as string || null
     const authorId = formData.get('authorId') as string
     const categoryId = formData.get('categoryId') as string || null
-    const status = formData.get('status') as string || 'PENDING'
+    const statusStr = formData.get('status') as string
+    const status = (statusStr as CourseStatus) || CourseStatus.PENDING
     const tagIdsStr = formData.get('tagIds') as string
     const tagIds = tagIdsStr ? JSON.parse(tagIdsStr) : []
 
@@ -96,8 +98,8 @@ export async function POST(request: NextRequest) {
         cons: cons || null,
         authorId,
         categoryId: categoryId || null,
-        status: status || 'PENDING',
-        publishedAt: status === 'APPROVED' ? new Date() : null,
+        status: status || CourseStatus.PENDING,
+        publishedAt: status === CourseStatus.APPROVED ? new Date() : null,
         tags: {
           create: (tagIds || []).map((tagId: string) => ({
             tag: { connect: { id: tagId } },

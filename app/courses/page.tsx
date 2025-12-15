@@ -1,10 +1,23 @@
 import { prisma } from '@/lib/prisma'
 import CoursesList from '@/components/CoursesList'
+import { Prisma, CourseStatus } from '@prisma/client'
 
 export const metadata = {
   title: 'Каталог онлайн-курсов - Агрегатор Курсов',
   description: 'Полный каталог онлайн-курсов с фильтрацией, сортировкой и поиском',
 }
+
+type CourseWithRelations = Prisma.CourseGetPayload<{
+  include: {
+    author: true
+    category: true
+    tags: {
+      include: {
+        tag: true
+      }
+    }
+  }
+}>
 
 async function getCourses(searchParams: { [key: string]: string | string[] | undefined }) {
   const search = typeof searchParams.search === 'string' ? searchParams.search : ''
@@ -15,7 +28,7 @@ async function getCourses(searchParams: { [key: string]: string | string[] | und
   const sort = typeof searchParams.sort === 'string' ? searchParams.sort : 'random'
 
   const where: any = {
-    status: 'APPROVED',
+    status: CourseStatus.APPROVED,
   }
 
   if (search) {
@@ -92,7 +105,7 @@ async function getCourses(searchParams: { [key: string]: string | string[] | und
   }
 
   const [coursesRaw, categories] = await Promise.all([
-    prisma.course.findMany(queryOptions).catch(() => []),
+    prisma.course.findMany(queryOptions).catch(() => [] as CourseWithRelations[]),
     prisma.category.findMany({
       orderBy: [{ order: 'asc' }, { name: 'asc' }],
     }).catch(() => []),
@@ -109,7 +122,7 @@ async function getCourses(searchParams: { [key: string]: string | string[] | und
   }
 
   // Если нужна случайная сортировка, перемешиваем массив
-  let courses = coursesRaw
+  let courses: CourseWithRelations[]
   if (shouldShuffle && coursesRaw.length > 0) {
     // Для случайной сортировки получаем все курсы, перемешиваем и берем первые 30
     const allCourses = await prisma.course.findMany({
@@ -125,6 +138,8 @@ async function getCourses(searchParams: { [key: string]: string | string[] | und
       },
     })
     courses = shuffleArray(allCourses).slice(0, 30)
+  } else {
+    courses = coursesRaw as CourseWithRelations[]
   }
 
   return { courses, categories, total }

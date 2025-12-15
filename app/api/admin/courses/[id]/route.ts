@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma'
 import { slugify } from '@/lib/utils'
 import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
+import { CourseStatus } from '@prisma/client'
 
 export async function DELETE(
   request: NextRequest,
@@ -65,7 +66,7 @@ export async function PUT(
     const cons = formData.get('cons') as string || null
     const authorId = formData.get('authorId') as string
     const categoryId = formData.get('categoryId') as string || null
-    const status = formData.get('status') as string
+    const status = formData.get('status') as CourseStatus
     const tagIdsStr = formData.get('tagIds') as string
     const tagIds = tagIdsStr ? JSON.parse(tagIdsStr) : []
 
@@ -137,7 +138,7 @@ export async function PUT(
         authorId,
         categoryId: categoryId || null,
         status,
-        publishedAt: status === 'APPROVED' && existingCourse?.status !== 'APPROVED'
+        publishedAt: status === CourseStatus.APPROVED && existingCourse?.status !== CourseStatus.APPROVED
           ? new Date()
           : existingCourse?.publishedAt,
         tags: {

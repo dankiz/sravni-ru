@@ -30,7 +30,8 @@
       "Bash(tasklist:*)",
       "Bash(dir:*)",
       "Bash(node server.js:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(npx next build:*)"
     ],
     "deny": [],
     "ask": []

@@ -2,33 +2,12 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import CourseCard from './CourseCard'
+import { Course as PrismaCourse, Author, Category, Tag, CourseTag } from '@prisma/client'
 
-interface Course {
-  id: string
-  title: string
-  slug: string
-  link: string
-  image?: string | null
-  averageRating?: number | null
-  reviewCount?: number | null
-  price?: number | null
-  pricePerLesson?: number | null
-  pricePerMonth?: number | null
-  priceOneTime?: number | null
-  priceType?: string | null
-  description?: string | null
-  author: {
-    name: string
-    slug: string
-  }
-  tags?: {
-    tag: {
-      id: string
-      name: string
-      slug: string
-      color?: string | null
-    }
-  }[]
+type Course = PrismaCourse & {
+  author: Author
+  category?: Category | null
+  tags?: (CourseTag & { tag: Tag })[]
 }
 
 interface CoursesListProps {
