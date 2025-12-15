@@ -82,7 +82,7 @@ export default function CategoryOrderManager({ initialCategories }: CategoryOrde
       </div>
 
       <div className="space-y-2">
-        {categories.map((category, index) => (
+        {categories.map((category: any, index: number) => (
           <div
             key={category.id}
             draggable

@@ -259,7 +259,7 @@ export default function Quiz() {
 
           {/* Options */}
           <div className="space-y-4">
-            {questions[currentQuestion].options.map((option) => {
+            {questions[currentQuestion].options.map((option: any) => {
               const isSelected = currentAnswer === option.value
               return (
                 <button

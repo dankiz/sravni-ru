@@ -23,11 +23,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Парсим ответы
-    const goal = answers.find((a) => a.questionId === 1)?.answer as string
-    const level = answers.find((a) => a.questionId === 2)?.answer as string
-    const budget = answers.find((a) => a.questionId === 3)?.answer as string
-    const paymentFormat = answers.find((a) => a.questionId === 4)?.answer as string
-    const priority = answers.find((a) => a.questionId === 5)?.answer as string
+    const goal = answers.find((a: any) => a.questionId === 1)?.answer as string
+    const level = answers.find((a: any) => a.questionId === 2)?.answer as string
+    const budget = answers.find((a: any) => a.questionId === 3)?.answer as string
+    const paymentFormat = answers.find((a: any) => a.questionId === 4)?.answer as string
+    const priority = answers.find((a: any) => a.questionId === 5)?.answer as string
 
     // Получаем ID авторов для языков
     const skyengAuthor = await prisma.author.findUnique({ where: { slug: 'skyeng' } })

@@ -130,7 +130,7 @@ export default function CourseCard({ course }: CourseCardProps) {
           {/* Tags */}
           {course.tags && course.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4">
-              {course.tags.slice(0, 3).map((courseTag) => (
+              {course.tags.slice(0, 3).map((courseTag: any) => (
                 <Link
                   key={courseTag.tag.id}
                   href={`/tag/${courseTag.tag.slug}`}

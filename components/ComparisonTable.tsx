@@ -69,7 +69,7 @@ export default function ComparisonTable() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-700">
-                  {comparison.map((item, index) => (
+                  {comparison.map((item: any, index: number) => (
                     <tr key={index} className="hover:bg-gray-750 transition-colors">
                       <td className="px-6 py-6 align-top">
                         <div className="font-bold text-white">

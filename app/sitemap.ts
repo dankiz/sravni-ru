@@ -42,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]
 
   // School pages
-  const schoolPages = authors.map((author) => ({
+  const schoolPages = authors.map((author: any) => ({
     url: `${baseUrl}/school/${author.slug}`,
     lastModified: author.updatedAt,
     changeFrequency: 'weekly' as const,
@@ -50,7 +50,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   // Category pages
-  const categoryPages = categories.map((category) => ({
+  const categoryPages = categories.map((category: any) => ({
     url: `${baseUrl}/category/${category.slug}`,
     lastModified: category.updatedAt,
     changeFrequency: 'weekly' as const,
@@ -58,7 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   // Tag pages
-  const tagPages = tags.map((tag) => ({
+  const tagPages = tags.map((tag: any) => ({
     url: `${baseUrl}/tag/${tag.slug}`,
     lastModified: tag.updatedAt,
     changeFrequency: 'weekly' as const,

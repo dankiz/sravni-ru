@@ -73,7 +73,7 @@ export default function WhyChooseUs() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {benefits.map((benefit, index) => {
+            {benefits.map((benefit: any, index: number) => {
               const Icon = benefit.icon
               return (
                 <div

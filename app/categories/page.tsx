@@ -47,7 +47,7 @@ async function getCategories() {
     })
 
     // Удаляем временное поле _sortIndex
-    return filtered.map(({ _sortIndex, ...category }) => category)
+    return filtered.map(({ _sortIndex, ...category }: any) => category)
   } catch (error) {
     console.error('Error fetching categories:', error)
     return []

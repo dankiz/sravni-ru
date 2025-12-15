@@ -67,7 +67,7 @@ export default function PricingFactorsTable() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-700">
-                  {factors.map((factor, index) => {
+                  {factors.map((factor: any, index: number) => {
                     const Icon = factor.icon
                     return (
                       <tr key={index} className="hover:bg-gray-750 transition-colors">

@@ -81,7 +81,7 @@ export default function RatingManager({ courses }: { courses: Course[] }) {
             </tr>
           </thead>
           <tbody className="bg-gray-800 divide-y divide-gray-700">
-            {courses.map((course) => {
+            {courses.map((course: any) => {
               const actualRating = calculateActualRating(course.reviews)
               const isEditing = editingId === course.id
 

@@ -340,7 +340,7 @@ export default async function SchoolPage({ params }: { params: { slug: string } 
 
             {author.courses.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {author.courses.map((course) => (
+                {author.courses.map((course: any) => (
                   <SchoolCourseCard key={course.id} course={course} />
                 ))}
               </div>
@@ -381,7 +381,7 @@ export default async function SchoolPage({ params }: { params: { slug: string } 
                   </div>
 
                   <div className="flex-grow">
-                    {[5, 4, 3, 2, 1].map((stars) => {
+                    {[5, 4, 3, 2, 1].map((stars: number) => {
                       const count = author.schoolReviews.filter((r: any) => r.rating === stars).length
                       const percentage = author.schoolReviews.length > 0 ? (count / author.schoolReviews.length) * 100 : 0
                       return (
@@ -413,7 +413,7 @@ export default async function SchoolPage({ params }: { params: { slug: string } 
                     <div className="flex items-start justify-between mb-4">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
-                          {[...Array(5)].map((_, i) => (
+                          {[...Array(5)].map((_: any, i: number) => (
                             <svg
                               key={i}
                               className={`w-5 h-5 ${i < review.rating ? 'fill-yellow-500' : 'fill-gray-600'}`}
@@ -486,7 +486,7 @@ export default async function SchoolPage({ params }: { params: { slug: string } 
                   </div>
 
                   <div className="flex-grow">
-                    {[5, 4, 3, 2, 1].map((stars) => {
+                    {[5, 4, 3, 2, 1].map((stars: number) => {
                       const count = author.allReviews.filter((r: any) => r.rating === stars).length
                       const percentage = reviewCount > 0 ? (count / reviewCount) * 100 : 0
                       return (
@@ -519,7 +519,7 @@ export default async function SchoolPage({ params }: { params: { slug: string } 
                       <div className="flex items-start justify-between mb-4">
                         <div>
                           <div className="flex items-center gap-2 mb-1">
-                            {[...Array(5)].map((_, i) => (
+                            {[...Array(5)].map((_: any, i: number) => (
                               <svg
                                 key={i}
                                 className={`w-5 h-5 ${i < review.rating ? 'fill-yellow-500' : 'fill-gray-600'}`}

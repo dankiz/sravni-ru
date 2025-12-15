@@ -39,7 +39,7 @@ export default function AdminNav() {
               Админ-панель
             </Link>
             <div className="hidden md:flex items-center gap-4">
-              {navItems.map((item) => {
+              {navItems.map((item: any) => {
                 const Icon = item.icon
                 const isActive = pathname === item.href || 
                   (item.href !== '/admin' && pathname?.startsWith(item.href))

@@ -13,7 +13,7 @@ export async function PUT(request: NextRequest) {
     }
 
     // Update order for each category
-    const updatePromises = categoryIds.map((id, index) =>
+    const updatePromises = categoryIds.map((id: string, index: number) =>
       prisma.category.update({
         where: { id },
         data: { order: index },

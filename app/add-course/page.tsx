@@ -58,7 +58,7 @@ export default function AddCoursePage() {
 
     try {
       const formData = new FormData()
-      Object.entries(data).forEach(([key, value]) => {
+      Object.entries(data).forEach(([key, value]: [string, any]) => {
         if (value !== undefined && value !== null && value !== '') {
           if (key === 'image' && value instanceof FileList && value.length > 0) {
             formData.append(key, value[0])

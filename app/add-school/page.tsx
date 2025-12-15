@@ -38,7 +38,7 @@ export default function AddSchoolPage() {
 
     try {
       const formData = new FormData()
-      Object.entries(data).forEach(([key, value]) => {
+      Object.entries(data).forEach(([key, value]: [string, any]) => {
         if (value !== undefined && value !== null && value !== '') {
           if (key === 'logo' && value instanceof FileList && value.length > 0) {
             formData.append(key, value[0])
