@@ -281,7 +281,7 @@ export default function CourseEditForm({
               ))}
             </select>
             <p className="text-xs text-gray-400 mt-1">
-              Категория из столбца "тег1" в CSV
+              Категория из столбца &quot;тег1&quot; в CSV
             </p>
           </div>
         </div>
@@ -404,7 +404,7 @@ export default function CourseEditForm({
             className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 placeholder-gray-400"
           />
           <p className="text-xs text-gray-400 mt-1">
-            Используйте поля "Цена в месяц" и "Цена за раз" вместо этого
+            Используйте поля &quot;Цена в месяц&quot; и &quot;Цена за раз&quot; вместо этого
           </p>
         </div>
 
